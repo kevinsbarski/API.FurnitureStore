@@ -24,12 +24,41 @@ namespace API.FurnitureStore.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDetailes(int id)
         {
-            var client = await _context.Clients.FirstOrDefaultAsync(c => c.id == id);
+            var client = await _context.Clients.FirstOrDefaultAsync(c => c.Id == id);
             if(client == null)
             {
                 return NotFound();
             }
             return Ok(client);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Post(Client client)
+        {
+            await _context.Clients.AddAsync(client);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("Post", client.Id, client);
+        }
+        [HttpPut]
+        public async Task<IActionResult> Put(Client client)
+        {
+          
+            _context.Clients.Update(client);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+        [HttpDelete]
+        public async Task<IActionResult> Delete(Client client)
+        {
+            if (client == null)
+            {
+                return NotFound();
+            }
+            _context.Clients.Remove(client);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
 
 
