@@ -1,6 +1,7 @@
 using API.FurnitureStore.API.Configuration;
 using API.FurnitureStore.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -14,6 +15,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// It uses the same db we use in context "useSqlite".
+// Sqlite should use the db creaated in the connection string in "appsettings.json".
+// This is how to INJECT the DEPENDECY so it can be use through the whole project
 builder.Services.AddDbContext<APIFurnitureStoreContext>(options =>
             options.UseSqlite(builder.Configuration.GetConnectionString("APIFurnitureStoreContext")));
 
@@ -40,6 +44,9 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+        options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<APIFurnitureStoreContext>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
