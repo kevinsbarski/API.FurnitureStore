@@ -2,11 +2,13 @@
 using API.FurnitureStore.Data;
 using API.FurnitureStore.Shared;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.FurnitureStore.API.Controllers
-{ 
-[Route("api/[controller]")]
-[ApiController]
+{
+    [Authorize]
+    [Route("api/[controller]")]
+    [ApiController]
 public class ProductsController : Controller
 {
     private readonly APIFurnitureStoreContext _context;
