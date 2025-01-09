@@ -14,6 +14,7 @@ namespace API.FurnitureStore.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<ProductCategory> ProductCategory { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite();
